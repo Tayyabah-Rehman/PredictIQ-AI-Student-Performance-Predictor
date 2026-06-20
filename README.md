@@ -1,5 +1,3 @@
-# PredictIQ-AI-Student-Performance-Predictor
-AI-powered student performance predictor using a 4-model ensemble (XGBoost + Random Forest + Gradient Boosting + Extra Trees) achieving 94.2% accuracy. Full-stack Flask web app with interactive dashboard, real-time predictions, and personalized improvement insights.
 # PredictIQ — AI Student Performance Predictor
 
 <div align="center">
@@ -21,7 +19,7 @@ AI-powered student performance predictor using a 4-model ensemble (XGBoost + Ran
 
 <br/>
 
-![Predictor Interface](screenshots/task4_predictor.png)
+![Predictor Interface](https://raw.githubusercontent.com/Tayyabah-Rehman/PredictIQ-AI-Student-Performance-Predictor/main/Student%20Academic%20Performance%20Interface.png)
 
 </div>
 
@@ -30,7 +28,6 @@ AI-powered student performance predictor using a 4-model ensemble (XGBoost + Ran
 ## Table of Contents
 
 - [Overview](#overview)
-- [Live Demo](#live-demo)
 - [Features](#features)
 - [Model Architecture](#model-architecture)
 - [Dataset](#dataset)
@@ -83,13 +80,13 @@ Feature Engineering  ──►  12 features total
        ▼
 StandardScaler (fitted on SMOTE training data)
        │
-   ┌───┴──────────────────────────────┐
-   │                                  │
-   ▼                                  ▼
-XGBoost         Random Forest    Gradient Boosting    Extra Trees
-(weight ~40%)   (weight ~15%)    (weight ~30%)        (weight ~15%)
-   │                 │                │                    │
-   └─────────────────┴────────────────┴────────────────────┘
+   ┌───┴──────────────────────────────────────────┐
+   │            │               │                 │
+   ▼            ▼               ▼                 ▼
+XGBoost    Random Forest  Gradient Boosting  Extra Trees
+(~40%)       (~15%)           (~30%)           (~15%)
+   │            │               │                 │
+   └────────────┴───────────────┴─────────────────┘
                               │
                     Soft Voting (weighted avg probabilities)
                               │
@@ -195,10 +192,6 @@ StudentPerformancePredictor/
 │       ├── chart_heatmap.png
 │       ├── chart_categories.png
 │       └── chart_scatter.png
-│
-└── screenshots/
-    ├── task4_predictor.png
-    └── task5_dashboard.png
 ```
 
 ---
@@ -215,8 +208,8 @@ StudentPerformancePredictor/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Tayyabah-Rehman/StudentPerformancePredictor.git
-cd StudentPerformancePredictor
+git clone https://github.com/Tayyabah-Rehman/PredictIQ-AI-Student-Performance-Predictor.git
+cd PredictIQ-AI-Student-Performance-Predictor
 
 # 2. Create virtual environment (Python 3.10)
 py -3.10 -m venv .venv          # Windows
@@ -367,11 +360,9 @@ Visit `http://localhost:5000/dashboard` for:
 
 ## Screenshots
 
-### Predictor — `http://localhost:5000`
-![Predictor](screenshots/task4_predictor.png)
-
 ### Analytics Dashboard — `http://localhost:5000/dashboard`
-![Dashboard](screenshots/task5_dashboard.png)
+
+![Analytics Dashboard](https://raw.githubusercontent.com/Tayyabah-Rehman/PredictIQ-AI-Student-Performance-Predictor/main/Student%20Academic%20Performance%20Dashboard.png)
 
 ---
 
