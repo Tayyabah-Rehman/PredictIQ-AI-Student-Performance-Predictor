@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Analytics Dashboard — PredictIQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <link rel="stylesheet" href="/static/css/dashboard.css"/>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="var(--accent)" stroke-width="1.5"/>
+          <path d="M8 18 L11 12 L14 15 L17 9 L20 13" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="20" cy="13" r="1.5" fill="var(--accent)"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">PredictIQ</div>
+        <div class="brand-sub">Analytics Dashboard</div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="/">← Predictor</a>
+      <a href="/dashboard" class="nav-active">Dashboard</a>
+      <span class="nav-badge ok">● Live Data</span>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE TITLE -->
+<div class="dash-hero">
+  <div class="dash-hero-inner">
+    <div class="hero-tag">Matplotlib · Seaborn · Chart.js · 8,000 Student Records</div>
+    <h1 class="dash-title">Dataset <span class="hero-accent">Insights & Analytics</span></h1>
+    <p class="dash-sub">Exploratory analysis of the student performance dataset — distributions, correlations, and grade breakdowns.</p>
+  </div>
+</div>
+
+<!-- ═══ KPI CARDS ═══ -->
+<div class="dash-wrap">
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">👥</div>
+      <div class="kpi-val" id="kpi-records">8,000</div>
+      <div class="kpi-lbl">Total Records</div>
+      <div class="kpi-sub">Training dataset size</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📊</div>
+      <div class="kpi-val" id="kpi-marks">85.3</div>
+      <div class="kpi-lbl">Average Marks</div>
+      <div class="kpi-sub">Out of 100</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">🏫</div>
+      <div class="kpi-val" id="kpi-attend">81.7%</div>
+      <div class="kpi-lbl">Average Attendance</div>
+      <div class="kpi-sub">Across all students</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📚</div>
+      <div class="kpi-val" id="kpi-study">6.7 hrs</div>
+      <div class="kpi-lbl">Avg Study Hours</div>
+      <div class="kpi-sub">Per day</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">😴</div>
+      <div class="kpi-val" id="kpi-sleep">7.0 hrs</div>
+      <div class="kpi-lbl">Avg Sleep Hours</div>
+      <div class="kpi-sub">Per day</div>
+    </div>
+    <div class="kpi-card kpi-accent">
+      <div class="kpi-icon">🎯</div>
+      <div class="kpi-val">94.2%</div>
+      <div class="kpi-lbl">Model Accuracy</div>
+      <div class="kpi-sub">4-model ensemble</div>
+    </div>
+  </div>
+
+  <!-- ═══ GRADE SUMMARY BAR (Chart.js) ═══ -->
+  <div class="section-block">
+    <div class="section-header">
+      <h2>Performance Categories Overview</h2>
+      <span class="section-tag">Chart.js · Live</span>
+    </div>
+    <div class="chartjs-row">
+      <div class="chartjs-card">
+        <div class="chartjs-title">Grade Distribution</div>
+        <canvas id="gradeDonut" height="260"></canvas>
+      </div>
+      <div class="chartjs-card">
+        <div class="chartjs-title">Average Marks by Grade</div>
+        <canvas id="marksByGrade" height="260"></canvas>
+      </div>
+      <div class="chartjs-card">
+        <div class="chartjs-title">Average Study Hours by Grade</div>
+        <canvas id="studyByGrade" height="260"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MATPLOTLIB CHARTS ═══ -->
+  <div class="section-block">
+    <div class="section-header">
+      <h2>Attendance Distribution</h2>
+      <span class="section-tag">Matplotlib + Seaborn</span>
+    </div>
+    <div class="img-card">
+      <img src="/static/img/chart_attendance.png" alt="Attendance Distribution" class="dash-chart-img"/>
+      <div class="img-caption">
+        Histogram + KDE overlay showing how attendance patterns differ across performance grades.
+        Excellent students cluster above 85%; Needs Improvement students show a long left tail.
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-header">
+      <h2>Marks Distribution</h2>
+      <span class="section-tag">Matplotlib + Seaborn</span>
+    </div>
+    <div class="img-card">
+      <img src="/static/img/chart_marks.png" alt="Marks Distribution" class="dash-chart-img"/>
+      <div class="img-caption">
+        Violin plot (left) shows full distribution shape and quartiles per grade.
+        Box plot (right) highlights median, IQR, and outliers — Excellent students have tighter, higher ranges.
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-header">
+      <h2>Feature Correlation Heatmap</h2>
+      <span class="section-tag">Seaborn · Pearson r</span>
+    </div>
+    <div class="img-card">
+      <img src="/static/img/chart_heatmap.png" alt="Feature Correlation Heatmap" class="dash-chart-img" style="max-width:700px"/>
+      <div class="img-caption">
+        Pearson correlation matrix of all 6 input features (lower triangle).
+        <strong>Study hours ↔ Attendance</strong> shows the strongest positive correlation (r ≈ 0.45),
+        confirming that disciplined students maintain both habits simultaneously.
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-header">
+      <h2>Performance Category Breakdown</h2>
+      <span class="section-tag">Matplotlib</span>
+    </div>
+    <div class="img-card">
+      <img src="/static/img/chart_categories.png" alt="Performance Categories" class="dash-chart-img"/>
+      <div class="img-caption">
+        Donut chart (left) shows class proportions — dominated by Excellent due to the dataset's
+        positive skew. Horizontal bar (right) gives exact counts. SMOTE was applied during training
+        to balance these classes for unbiased learning.
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-header">
+      <h2>Study Hours vs Previous Marks</h2>
+      <span class="section-tag">Matplotlib · Scatter</span>
+    </div>
+    <div class="img-card">
+      <img src="/static/img/chart_scatter.png" alt="Scatter: Study vs Marks" class="dash-chart-img"/>
+      <div class="img-caption">
+        Each point is one student. The gradient from red (Needs Improvement) to green (Excellent)
+        shows a clear diagonal trend — more study hours + higher prior marks strongly predict better outcomes.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CORRELATION TABLE ═══ -->
+  <div class="section-block">
+    <div class="section-header">
+      <h2>Correlation Summary Table</h2>
+      <span class="section-tag">Seaborn · Computed</span>
+    </div>
+    <div class="corr-table-wrap">
+      <table class="corr-table" id="corr-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Study Hrs</th><th>Attendance</th><th>Assignments</th>
+            <th>Prev Marks</th><th>Sleep Hrs</th><th>Extracurric</th>
+          </tr>
+        </thead>
+        <tbody id="corr-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /dash-wrap -->
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>Built with <strong>Flask</strong> · <strong>Matplotlib</strong> · <strong>Seaborn</strong> · <strong>Chart.js</strong></div>
+    <div><a href="https://github.com/Tayyabah-Rehman" target="_blank">GitHub: Tayyabah-Rehman</a> · 2025</div>
+  </div>
+</footer>
+
+<script>
+const GRADE_COLORS = {
+  "Excellent":"#34d399","Good":"#60a5fa",
+  "Average":"#fbbf24","Needs Improvement":"#f87171"
+};
+const GRADE_ORDER = ["Excellent","Good","Average","Needs Improvement"];
+const COLS = ["study_hours","attendance","assignments","previous_marks","sleep_hours","extracurricular"];
+
+async function loadDash() {
+  const data = await (await fetch('/api/dashboard-stats')).json();
+
+  // KPIs
+  document.getElementById('kpi-records').textContent = data.total_records.toLocaleString();
+  document.getElementById('kpi-marks').textContent   = data.avg_marks;
+  document.getElementById('kpi-attend').textContent  = data.avg_attendance + '%';
+  document.getElementById('kpi-study').textContent   = data.avg_study_hours + ' hrs';
+  document.getElementById('kpi-sleep').textContent   = data.avg_sleep + ' hrs';
+
+  const chartOpts = (type) => ({
+    responsive:true,
+    plugins:{ legend:{ labels:{ color:'#8896b0', font:{family:'Inter',size:11} } },
+              tooltip:{ bodyFont:{family:'JetBrains Mono'} }},
+    scales: type!=='doughnut' ? {
+      x:{ ticks:{color:'#8896b0',font:{family:'Inter',size:10}}, grid:{color:'#2a3347'} },
+      y:{ ticks:{color:'#8896b0',font:{family:'JetBrains Mono',size:10}}, grid:{color:'#2a3347'} }
+    } : {}
+  });
+
+  // Donut
+  new Chart(document.getElementById('gradeDonut'),{
+    type:'doughnut',
+    data:{ labels:GRADE_ORDER,
+           datasets:[{ data:GRADE_ORDER.map(g=>data.grade_counts[g]||0),
+                       backgroundColor:GRADE_ORDER.map(g=>COLORS(g,'55')),
+                       borderColor:GRADE_ORDER.map(g=>GRADE_COLORS[g]),
+                       borderWidth:2, hoverOffset:6 }] },
+    options:{ ...chartOpts('doughnut'), cutout:'62%',
+              plugins:{ legend:{ position:'bottom', labels:{color:'#8896b0',padding:14,font:{family:'Inter',size:11}} } } }
+  });
+
+  // Marks by Grade
+  new Chart(document.getElementById('marksByGrade'),{
+    type:'bar',
+    data:{ labels:GRADE_ORDER,
+           datasets:[{ label:'Avg Marks',
+                       data:GRADE_ORDER.map(g=>data.marks_by_grade[g]),
+                       backgroundColor:GRADE_ORDER.map(g=>COLORS(g,'55')),
+                       borderColor:GRADE_ORDER.map(g=>GRADE_COLORS[g]),
+                       borderWidth:2, borderRadius:6 }] },
+    options:{ ...chartOpts('bar'),
+              plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.raw}/100`}} } }
+  });
+
+  // Study by Grade
+  new Chart(document.getElementById('studyByGrade'),{
+    type:'bar',
+    data:{ labels:GRADE_ORDER,
+           datasets:[{ label:'Avg Study Hrs',
+                       data:GRADE_ORDER.map(g=>data.study_by_grade[g]),
+                       backgroundColor:GRADE_ORDER.map(g=>COLORS(g,'55')),
+                       borderColor:GRADE_ORDER.map(g=>GRADE_COLORS[g]),
+                       borderWidth:2, borderRadius:6 }] },
+    options:{ ...chartOpts('bar'),
+              plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>` ${ctx.raw} hrs`}} } }
+  });
+
+  // Correlation table
+  const tbody = document.getElementById('corr-tbody');
+  const short = ["Study","Attend","Assign","Marks","Sleep","Extra"];
+  COLS.forEach((row,i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="corr-label">${short[i]}</td>` +
+      COLS.map(col => {
+        const v = data.correlation[row]?.[col] ?? 0;
+        const abs = Math.abs(v);
+        const alpha = Math.round(abs * 80 + 10);
+        const color = v > 0 ? `rgba(56,189,248,0.${alpha})` : v < -0.1 ? `rgba(248,113,113,0.${alpha})` : 'transparent';
+        const cls   = Math.abs(v) >= 0.3 ? 'corr-strong' : '';
+        return `<td class="corr-val ${cls}" style="background:${color}">${v.toFixed(2)}</td>`;
+      }).join('');
+    tbody.appendChild(tr);
+  });
+}
+
+function COLORS(g, alpha) { return GRADE_COLORS[g] + (alpha||'bb'); }
+
+document.addEventListener('DOMContentLoaded', loadDash);
+</script>
+</body>
+</html>

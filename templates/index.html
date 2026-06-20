@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Student Performance Predictor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="var(--accent)" stroke-width="1.5"/>
+          <path d="M8 18 L11 12 L14 15 L17 9 L20 13" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="20" cy="13" r="1.5" fill="var(--accent)"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">PredictIQ</div>
+        <div class="brand-sub">Student Performance AI  v2.0</div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="/">Predictor</a>
+      <a href="#about">Model Info</a>
+      <a href="/dashboard">Dashboard</a>
+      <span class="nav-badge" id="model-status-badge">Loading…</span>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">4-Model Ensemble · XGBoost + RF + GB + ET · SMOTE Balanced</div>
+    <h1 class="hero-title">
+      Predict Student
+      <span class="hero-accent">Academic Performance</span>
+      with 94%+ Accuracy
+    </h1>
+    <p class="hero-desc">
+      Six behavioral inputs. Four ML models. One confident grade prediction —
+      backed by a weighted ensemble trained on 8,000 student records with SMOTE class balancing.
+    </p>
+    <div class="hero-metrics">
+      <div class="hero-metric"><span class="hero-metric-val">94.2%</span><span class="hero-metric-lbl">Accuracy</span></div>
+      <div class="hero-metric-sep"></div>
+      <div class="hero-metric"><span class="hero-metric-val">0.988</span><span class="hero-metric-lbl">ROC-AUC</span></div>
+      <div class="hero-metric-sep"></div>
+      <div class="hero-metric"><span class="hero-metric-val">8K</span><span class="hero-metric-lbl">Training Samples</span></div>
+      <div class="hero-metric-sep"></div>
+      <div class="hero-metric"><span class="hero-metric-val">4-Model</span><span class="hero-metric-lbl">Ensemble</span></div>
+    </div>
+  </div>
+</section>
+
+<main id="predictor">
+  <div class="content-grid">
+
+    <!-- INPUT -->
+    <div class="panel panel-form">
+      <div class="panel-header">
+        <h2>Input Parameters</h2>
+        <p>6 behavioral + academic features</p>
+      </div>
+
+      <div class="inputs-grid">
+
+        <div class="input-group">
+          <label><span class="label-icon">📚</span>Daily Study Hours<span class="label-val" id="val-study">5.0 hrs</span></label>
+          <input type="range" id="study_hours" min="0" max="12" step="0.5" value="5"
+                 oninput="syncVal(this,'val-study','number-study',' hrs')"/>
+          <input type="number" id="number-study" min="0" max="12" step="0.5" value="5"
+                 oninput="syncNum(this,'study_hours','val-study',' hrs')"/>
+          <div class="range-labels"><span>0</span><span>12 hrs</span></div>
+        </div>
+
+        <div class="input-group">
+          <label><span class="label-icon">🏫</span>Attendance Rate<span class="label-val" id="val-attend">80%</span></label>
+          <input type="range" id="attendance" min="0" max="100" step="1" value="80"
+                 oninput="syncVal(this,'val-attend','number-attend','%')"/>
+          <input type="number" id="number-attend" min="0" max="100" step="1" value="80"
+                 oninput="syncNum(this,'attendance','val-attend','%')"/>
+          <div class="range-labels"><span>0%</span><span>100%</span></div>
+        </div>
+
+        <div class="input-group">
+          <label><span class="label-icon">📝</span>Assignments Done<span class="label-val" id="val-assign">7 / 10</span></label>
+          <input type="range" id="assignments" min="0" max="10" step="1" value="7"
+                 oninput="syncVal(this,'val-assign','number-assign',' / 10')"/>
+          <input type="number" id="number-assign" min="0" max="10" step="1" value="7"
+                 oninput="syncNum(this,'assignments','val-assign',' / 10')"/>
+          <div class="range-labels"><span>0</span><span>10</span></div>
+        </div>
+
+        <div class="input-group">
+          <label><span class="label-icon">📊</span>Previous Marks<span class="label-val" id="val-marks">65 / 100</span></label>
+          <input type="range" id="previous_marks" min="0" max="100" step="1" value="65"
+                 oninput="syncVal(this,'val-marks','number-marks',' / 100')"/>
+          <input type="number" id="number-marks" min="0" max="100" step="1" value="65"
+                 oninput="syncNum(this,'previous_marks','val-marks',' / 100')"/>
+          <div class="range-labels"><span>0</span><span>100</span></div>
+        </div>
+
+        <div class="input-group">
+          <label><span class="label-icon">😴</span>Sleep Hours/Day<span class="label-val" id="val-sleep">7.0 hrs</span></label>
+          <input type="range" id="sleep_hours" min="4" max="10" step="0.5" value="7"
+                 oninput="syncVal(this,'val-sleep','number-sleep',' hrs')"/>
+          <input type="number" id="number-sleep" min="4" max="10" step="0.5" value="7"
+                 oninput="syncNum(this,'sleep_hours','val-sleep',' hrs')"/>
+          <div class="range-labels"><span>4</span><span>10 hrs</span></div>
+        </div>
+
+        <div class="input-group">
+          <label><span class="label-icon">🎯</span>Extracurricular Activities<span class="label-val" id="val-extra">2 / 5</span></label>
+          <input type="range" id="extracurricular" min="0" max="5" step="1" value="2"
+                 oninput="syncVal(this,'val-extra','number-extra',' / 5')"/>
+          <input type="number" id="number-extra" min="0" max="5" step="1" value="2"
+                 oninput="syncNum(this,'extracurricular','val-extra',' / 5')"/>
+          <div class="range-labels"><span>0</span><span>5</span></div>
+        </div>
+
+      </div>
+
+      <button class="btn-predict" id="btn-predict" onclick="runPrediction()">
+        <span id="btn-text">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+          Predict Performance
+        </span>
+        <span id="btn-loading" class="hidden"><span class="spinner"></span> Analyzing…</span>
+      </button>
+
+      <div class="quick-examples">
+        <div class="qe-label">Quick demo:</div>
+        <button class="qe-btn" onclick="loadExample('excellent')">🌟 Excellent</button>
+        <button class="qe-btn" onclick="loadExample('average')">📘 Average</button>
+        <button class="qe-btn" onclick="loadExample('poor')">⚠️ At Risk</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="panel panel-result">
+      <div class="result-placeholder" id="placeholder">
+        <div class="placeholder-icon">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" stroke="var(--border)" stroke-width="2"/>
+            <path d="M20 44 L26 32 L32 38 L38 24 L44 30" stroke="var(--accent-muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="44" cy="30" r="3" fill="var(--accent-muted)"/>
+          </svg>
+        </div>
+        <p class="placeholder-text">Set your parameters and click<br/><strong>Predict Performance</strong></p>
+      </div>
+
+      <div class="result-content hidden" id="result-content">
+
+        <div class="grade-display" id="grade-display">
+          <div class="grade-badge" id="grade-badge">—</div>
+          <div class="grade-meta">
+            <div class="grade-label" id="grade-label">—</div>
+            <div class="grade-conf">
+              Confidence: <strong id="grade-conf-val">—</strong>
+              <span class="conf-pill" id="conf-pill">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-section">
+          <div class="chart-title">Grade Probability Distribution</div>
+          <canvas id="probChart" height="190"></canvas>
+        </div>
+
+        <div class="insights-section">
+          <div class="insights-title">Personalized Insights</div>
+          <div id="insights-list"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- MODEL INFO -->
+<section class="model-section" id="about">
+  <div class="model-inner">
+    <h2 class="section-title">Model Architecture &amp; Performance</h2>
+
+    <div class="model-grid">
+      <div class="model-card">
+        <div class="model-card-icon">🌲</div>
+        <h3>Random Forest</h3>
+        <p>300 trees · max depth 14 · ensemble weight 15%<br/>Accuracy: 92.9%</p>
+      </div>
+      <div class="model-card">
+        <div class="model-card-icon">⚡</div>
+        <h3>XGBoost</h3>
+        <p>300 boosted trees · lr 0.05 · <strong>ensemble weight 40%</strong><br/>Accuracy: 93.7%</p>
+      </div>
+      <div class="model-card">
+        <div class="model-card-icon">📈</div>
+        <h3>Gradient Boosting</h3>
+        <p>200 estimators · lr 0.05 · ensemble weight 30%<br/>Accuracy: 93.3%</p>
+      </div>
+      <div class="model-card">
+        <div class="model-card-icon">🌳</div>
+        <h3>Extra Trees</h3>
+        <p>300 randomized trees · max depth 13 · ensemble weight 15%<br/>Accuracy: 92.1%</p>
+      </div>
+    </div>
+
+    <div class="smote-banner">
+      <span class="smote-icon">⚖️</span>
+      <div>
+        <strong>SMOTE Class Balancing</strong> — Training data was balanced from 6,800 majority-class samples
+        to equal representation across all 4 grade categories, preventing the model from being biased toward "Excellent".
+      </div>
+    </div>
+
+    <div class="fi-section">
+      <div class="fi-title">Feature Importances (Random Forest)</div>
+      <div class="fi-chart-wrap">
+        <canvas id="fiChart" height="220"></canvas>
+      </div>
+    </div>
+
+    <div class="perf-grid" id="perf-grid"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>Built with <strong>Flask</strong> · <strong>scikit-learn</strong> · <strong>XGBoost</strong> · <strong>Chart.js</strong></div>
+    <div><a href="https://github.com/Tayyabah-Rehman" target="_blank">GitHub: Tayyabah-Rehman</a> · 2025</div>
+  </div>
+</footer>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>
